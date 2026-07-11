@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "bounty-radar"
+version = "1.0.0"
+description = "Automated GitHub bounty scanner that posts fresh bounties to a Telegram channel every 6 hours."
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [{name = "Marwan"}]
+dependencies = []
+
+[project.scripts]
+bounty-radar = "bounty_radar.scanner:run"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

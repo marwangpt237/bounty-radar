@@ -1,0 +1,32 @@
+name: Bounty Radar Scan
+
+on:
+  schedule:
+    # Run every 6 hours at :05 past (avoids exact-hour GitHub Actions congestion)
+    - cron: '5 */6 * * *'
+  workflow_dispatch:  # allow manual trigger for testing
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run scanner
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          cd src && python -m bounty_radar.scanner
+
+      - name: Run tests (only on manual trigger)
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          pip install pytest
+          python -m pytest tests/ -v
