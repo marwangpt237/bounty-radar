@@ -38,13 +38,14 @@ You check Telegram in the morning, see 3-5 fresh bounties, pick one, paste the l
 
 ### Step 4: Add secrets to the GitHub repo (5 min)
 1. Go to https://github.com/marwangpt237/bounty-radar/settings/secrets/actions
-2. Click **New repository secret** three times:
+2. Click **New repository secret** twice — add these two:
 
 | Name | Value |
 |---|---|
 | `TELEGRAM_BOT_TOKEN` | your bot token from step 1 |
 | `TELEGRAM_CHAT_ID` | your channel ID from step 3 |
-| `GITHUB_TOKEN` | your GitHub PAT (already created — reuse it) |
+
+> **Note:** Do NOT try to create a secret named `GITHUB_TOKEN` — GitHub will reject it ("secret name cannot begin with GITHUB_"). GitHub Actions automatically provides a `GITHUB_TOKEN` with read access to public repos, which is all the scanner needs.
 
 ### Step 5: Trigger the first run
 1. Go to https://github.com/marwangpt237/bounty-radar/actions
