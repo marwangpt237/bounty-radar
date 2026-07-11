@@ -51,7 +51,7 @@ def run():
     for i, b in enumerate(top, 1):
         print(f"  [{i}] {b.title[:80]} — {b.repo} — {b.comments}c — score={filter_and_rank([b])[0] if False else ''}")
 
-    # Send to Telegram
+    # Send to Telegram (resilient — returns 0 if auth fails, doesn't crash)
     sent = send_bounties(top)
     print(f"[scanner] sent {sent}/{len(top)} to Telegram")
 
